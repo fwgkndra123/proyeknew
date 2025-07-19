@@ -140,6 +140,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       halamanAdmin.style.display = "none";
     };
 
+    window.hapusAspirasi = async function (id) {
+      await supabaseClient.from("komentar").delete().eq("aspirasi_id", id);
+      await supabaseClient.from("aspirasi").delete().eq("id", id);
+      tampilkanAspirasiAdmin();
+    };
+
     async function tampilkanAspirasiAdmin() {
       daftarAdmin.innerHTML = "";
 
@@ -213,8 +219,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         p.innerHTML = `<strong>${kom.nama}</strong> <span style='color:gray; font-size:0.8em;'>${waktu}</span><br>${kom.isi}`;
 
         const btn = document.createElement("button");
-        btn.className = "hapus-btn";
         btn.textContent = "Hapus";
+        btn.className = "hapus-btn";
         btn.onclick = async () => {
           await supabaseClient.from("komentar").delete().eq("id", kom.id);
           await tampilkanKomentarAdmin(aspirasi_id);
@@ -225,11 +231,5 @@ document.addEventListener("DOMContentLoaded", async function () {
         target.appendChild(p);
       });
     }
-
-    window.hapusAspirasi = async function (id) {
-      await supabaseClient.from("komentar").delete().eq("aspirasi_id", id);
-      await supabaseClient.from("aspirasi").delete().eq("id", id);
-      tampilkanAspirasiAdmin();
-    };
   }
 });
