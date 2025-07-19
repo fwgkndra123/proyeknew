@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const loginBox = document.getElementById("loginBox");
   const loginError = document.getElementById("loginError");
 
-  // ==== BAGIAN UNTUK INDEX (User biasa) ====
   const form = document.getElementById("aspirasiForm");
   const namaInput = document.getElementById("nama");
   const isiInput = document.getElementById("isi");
@@ -116,7 +115,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     tampilkanAspirasi();
   }
 
-  // ==== BAGIAN UNTUK ADMIN ====
   if (loginBox && halamanAdmin) {
     window.loginAdmin = async function () {
       const pass = document.getElementById("adminPassword").value;
