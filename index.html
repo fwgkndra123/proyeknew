@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kotak Aspirasi Siswa</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:,"> <!-- Opsional, untuk hilangkan error favicon -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:,"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="script.js" defer></script>
 </head>
@@ -13,11 +13,14 @@
   <div class="container">
     <h1>Kotak Aspirasi Siswa</h1>
     <form id="aspirasiForm">
-      <input type="text" id="nama" placeholder="Nama Anda" required>
+      <input type="text" id="nama" placeholder="Nama Anda" required />
       <textarea id="isi" placeholder="Tulis aspirasi Anda..." required></textarea>
       <button type="submit">Kirim</button>
     </form>
     <p id="statusPesan"></p>
+
+    <!-- Daftar aspirasi tampil di sini -->
+    <div id="listAspirasi"></div>
   </div>
 </body>
 </html>
