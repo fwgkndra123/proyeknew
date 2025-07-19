@@ -1,94 +1,112 @@
-body {
+/* Reset dasar */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: sans-serif;
-  background: #e6f0fa;
-  color: #333;
-  line-height: 1.6;
-}
-.container {
-  max-width: 500px;
-  margin: 40px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-h1 {
-  color: #1e3a8a;
-  text-align: center;
-}
-input, textarea, button {
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-button {
-  background: #2563eb;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-button:hover {
-  background: #1e40af;
-}
-::placeholder {
-  color: #888;
-}
-.aspirasi-box {
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 20px;
-  background: #fff;
-}
-.komentar-container {
-  margin-top: 10px;
-  padding-left: 10px;
-  border-left: 2px solid #ddd;
-}
-.form-komentar input {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-@media (max-width: 600px) {
-  .container { margin: 20px; }
-}
-.form-container {
-  background: #f0f8ff;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  border: 1px solid #cfe2ff;
+  padding: 0;
 }
 
-.list-container {
+/* Body dan layout */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #e6f0fa;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Pembungkus semua */
+.page-wrapper {
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Kotak formulir dan daftar aspirasi */
+.form-box, .list-box {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+/* Judul */
+h1, h2 {
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+/* Input & textarea */
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  resize: vertical;
+}
+
+/* Tombol Kirim */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #1e40af;
+}
+
+/* Status pesan */
+#statusPesan {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+/* Kotak aspirasi */
+.aspirasi-box {
   background: #f9f9f9;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 10px;
   border: 1px solid #ddd;
 }
 
-.list-container h2 {
-  color: #1e3a8a;
-  margin-top: 0;
-  margin-bottom: 15px;
-}
-
-.aspirasi-box {
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 20px;
-  background: #fff;
-}
-
+/* Komentar */
 .komentar-container {
   margin-top: 10px;
-  padding-left: 10px;
-  border-left: 2px solid #ccc;
+  padding-left: 15px;
+  border-left: 3px solid #ccc;
 }
 
+.komentar-container p {
+  margin: 5px 0;
+}
+
+.form-komentar {
+  margin-top: 10px;
+}
+
+.form-komentar input[type="text"] {
+  margin-bottom: 8px;
+}
+
+/* Responsive sedikit */
+@media (max-width: 500px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .form-box, .list-box {
+    padding: 20px;
+  }
+}
