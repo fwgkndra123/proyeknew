@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
+  const SUPABASE_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
 
   const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const statusPesan = document.getElementById("statusPesan");
   const daftar = document.getElementById("daftarAspirasi");
 
+  // ================= USER =================
   if (form) {
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -26,7 +28,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      const { error } = await supabaseClient.from("aspirasi").insert([{ nama, isi }]);
+      const { error } = await supabaseClient
+        .from("aspirasi")
+        .insert([{ nama, isi }]);
 
       if (error) {
         statusPesan.textContent = "❌ Gagal mengirim aspirasi.";
@@ -55,7 +59,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       for (const asp of aspirasiData) {
         const kotak = document.createElement("div");
         kotak.className = "aspirasi-box";
-
         const waktu = new Date(asp.created_at).toLocaleString();
 
         kotak.innerHTML = `
@@ -82,7 +85,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           if (!nama || !isi) return;
 
-          await supabaseClient.from("komentar").insert([{ aspirasi_id, nama, isi }]);
+          await supabaseClient
+            .from("komentar")
+            .insert([{ aspirasi_id, nama, isi }]);
+
           formK.reset();
           await tampilkanKomentar(aspirasi_id);
         });
@@ -100,7 +106,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       divKomentar.innerHTML = "<strong>Komentar:</strong>";
 
       if (!komentarData || komentarData.length === 0) {
-        divKomentar.innerHTML += "<p style='color:gray;'>Belum ada komentar.</p>";
+        divKomentar.innerHTML +=
+          "<p style='color:gray;'>Belum ada komentar.</p>";
         return;
       }
 
@@ -115,6 +122,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     tampilkanAspirasi();
   }
 
+  // ================= ADMIN =================
   if (loginBox && halamanAdmin) {
     window.loginAdmin = async function () {
       const pass = document.getElementById("adminPassword").value;
@@ -134,6 +142,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function tampilkanAspirasiAdmin() {
       daftarAdmin.innerHTML = "";
+
       const { data: aspirasiData, error } = await supabaseClient
         .from("aspirasi")
         .select("*")
@@ -153,7 +162,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         box.innerHTML = `
           <strong>${asp.nama}</strong> <span style='color:gray;'>${waktu}</span>
           <p>${asp.isi}</p>
-          <button onclick="hapusAspirasi('${asp.id}')">Hapus Aspirasi</button>
+          <button class="hapus-btn" onclick="hapusAspirasi('${asp.id}')">Hapus Aspirasi</button>
           <div id="admin-komentar-${asp.id}" class="komentar-container"></div>
           <form data-id="${asp.id}" class="admin-komentar-form">
             <input type="text" name="isi" placeholder="Komentar sebagai Admin" required />
@@ -173,7 +182,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           if (!isi) return;
 
-          await supabaseClient.from("komentar").insert([{ aspirasi_id, nama: "Admin", isi }]);
+          await supabaseClient
+            .from("komentar")
+            .insert([{ aspirasi_id, nama: "Admin", isi }]);
+
           formK.reset();
           await tampilkanKomentarAdmin(aspirasi_id);
         });
@@ -201,6 +213,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         p.innerHTML = `<strong>${kom.nama}</strong> <span style='color:gray; font-size:0.8em;'>${waktu}</span><br>${kom.isi}`;
 
         const btn = document.createElement("button");
+        btn.className = "hapus-btn";
         btn.textContent = "Hapus";
         btn.onclick = async () => {
           await supabaseClient.from("komentar").delete().eq("id", kom.id);
