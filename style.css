@@ -5,21 +5,18 @@ body {
   color: #333;
   line-height: 1.6;
 }
-
 .container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 40px auto;
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-
 h1 {
   color: #1e3a8a;
   text-align: center;
 }
-
 input, textarea, button {
   width: 100%;
   margin-bottom: 15px;
@@ -28,7 +25,6 @@ input, textarea, button {
   border-radius: 8px;
   font-size: 1rem;
 }
-
 button {
   background: #2563eb;
   color: white;
@@ -36,116 +32,28 @@ button {
   cursor: pointer;
   transition: background 0.3s ease;
 }
-
 button:hover {
   background: #1e40af;
 }
-
 ::placeholder {
   color: #888;
 }
-
-/* 🧾 Kartu Aspirasi */
-.aspirasi-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.aspirasi-box {
+  border: 1px solid #ccc;
+  border-radius: 12px;
   padding: 15px;
   margin-top: 20px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  background: #fff;
 }
-
-.aspirasi-header {
-  font-weight: bold;
+.komentar-container {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #ddd;
+}
+.form-komentar input {
+  margin-top: 5px;
   margin-bottom: 5px;
-  color: #1e3a8a;
 }
-
-.aspirasi-body {
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-}
-
-.aspirasi-time {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 8px;
-}
-
-/* 💬 Komentar */
-.komentar-list {
-  border-top: 1px solid #eee;
-  margin-top: 10px;
-  padding-top: 10px;
-}
-
-.komentar-item {
-  padding: 6px 0;
-  border-bottom: 1px dashed #eee;
-  font-size: 0.95rem;
-}
-
-.komentar-nama {
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-.komentar-isi {
-  display: inline;
-}
-
-/* ➕ Tambah komentar */
-.komentar-form {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.komentar-form input {
-  flex: 1;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.komentar-form button {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-}
-
-.komentar-form button:hover {
-  background: #1e40af;
-}
-
-/* 🗑 Tombol hapus untuk admin */
-.hapus-aspirasi {
-  color: red;
-  background: none;
-  border: none;
-  float: right;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.hapus-aspirasi:hover {
-  text-decoration: underline;
-}
-
 @media (max-width: 600px) {
-  .container {
-    margin: 20px;
-  }
-
-  .komentar-form {
-    flex-direction: column;
-  }
-
-  .komentar-form input,
-  .komentar-form button {
-    width: 100%;
-  }
+  .container { margin: 20px; }
 }
