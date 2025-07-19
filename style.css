@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  max-width: 500px;
+  max-width: 600px;
   margin: 40px auto;
   background: white;
   padding: 20px;
@@ -45,56 +45,107 @@ button:hover {
   color: #888;
 }
 
+/* 🧾 Kartu Aspirasi */
+.aspirasi-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.aspirasi-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #1e3a8a;
+}
+
+.aspirasi-body {
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.aspirasi-time {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+/* 💬 Komentar */
+.komentar-list {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.komentar-item {
+  padding: 6px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 0.95rem;
+}
+
+.komentar-nama {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.komentar-isi {
+  display: inline;
+}
+
+/* ➕ Tambah komentar */
+.komentar-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.komentar-form input {
+  flex: 1;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.komentar-form button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.komentar-form button:hover {
+  background: #1e40af;
+}
+
+/* 🗑 Tombol hapus untuk admin */
+.hapus-aspirasi {
+  color: red;
+  background: none;
+  border: none;
+  float: right;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.hapus-aspirasi:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 600px) {
   .container {
     margin: 20px;
   }
-}
 
-/* === ✨ TAMBAHAN untuk daftar aspirasi === */
+  .komentar-form {
+    flex-direction: column;
+  }
 
-#listAspirasi {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.aspirasi-card {
-  background: #fff;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
-  border-left: 4px solid #2563eb;
-}
-
-.aspirasi-card h3 {
-  margin: 0 0 6px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #1e3a8a;
-}
-
-.aspirasi-card p {
-  margin: 6px 0;
-}
-
-.aspirasi-card .tanggal {
-  font-size: 0.8em;
-  color: gray;
-  margin-top: 6px;
-}
-
-.aspirasi-card .komentar-placeholder {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #555;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.aspirasi-card .komentar-placeholder::before {
-  content: "💬";
-  font-size: 1em;
+  .komentar-form input,
+  .komentar-form button {
+    width: 100%;
+  }
 }
