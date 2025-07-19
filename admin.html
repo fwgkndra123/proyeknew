@@ -22,7 +22,11 @@
 </div>
 
 <script>
-  const supabase = window.supabaseClient;
+  // Ganti dengan URL dan anon key milikmu
+  const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
+
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function login() {
     const pass = document.getElementById("password").value;
@@ -37,14 +41,20 @@
 
       if (error) {
         console.error("Gagal mengambil data:", error);
+        document.getElementById("daftarAspirasi").innerHTML = "<li>❌ Gagal memuat data.</li>";
         return;
       }
 
       const ul = document.getElementById("daftarAspirasi");
       ul.innerHTML = "";
+
+      if (data.length === 0) {
+        ul.innerHTML = "<li>Belum ada aspirasi.</li>";
+      }
+
       data.forEach(a => {
         const li = document.createElement("li");
-        li.textContent = `${a.created_at} - ${a.nama}: ${a.isi}`;
+        li.textContent = `${new Date(a.created_at).toLocaleString()} - ${a.nama}: ${a.isi}`;
         ul.appendChild(li);
       });
     } else {
