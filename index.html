@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kotak Aspirasi Siswa</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:,"> <!-- Opsional, untuk hilangkan error favicon -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="supabaseClient.js"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
       <textarea id="isi" placeholder="Tulis aspirasi Anda..." required></textarea>
       <button type="submit">Kirim</button>
     </form>
-    <p id="pesanSukses"></p>
+    <p id="statusPesan"></p>
   </div>
 </body>
 </html>
