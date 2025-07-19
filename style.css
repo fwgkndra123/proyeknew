@@ -57,3 +57,38 @@ button:hover {
 @media (max-width: 600px) {
   .container { margin: 20px; }
 }
+.form-container {
+  background: #f0f8ff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border: 1px solid #cfe2ff;
+}
+
+.list-container {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.list-container h2 {
+  color: #1e3a8a;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.aspirasi-box {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  background: #fff;
+}
+
+.komentar-container {
+  margin-top: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #ccc;
+}
+
