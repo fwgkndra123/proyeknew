@@ -1,35 +1,59 @@
-document.addEventListener("DOMContentLoaded", function () {
+<script type="module">
   const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
-
-  // Ganti nama agar tidak konflik dengan library
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const form = document.getElementById("aspirasiForm");
-  const namaInput = document.getElementById("nama");
-  const isiInput = document.getElementById("isi");
-  const statusPesan = document.getElementById("statusPesan");
-
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const nama = namaInput.value.trim();
-    const isi = isiInput.value.trim();
-
-    if (!nama || !isi) {
-      statusPesan.textContent = "Nama dan aspirasi wajib diisi.";
+  async function login() {
+    const pass = document.getElementById("password").value;
+    if (pass !== "admin123") {
+      document.getElementById("salah").textContent = "Password salah!";
       return;
     }
 
-    const { error } = await client.from("aspirasi").insert([{ nama, isi }]);
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminBox").style.display = "block";
 
-    if (error) {
-      statusPesan.textContent = "❌ Gagal mengirim aspirasi.";
-      console.error(error);
-    } else {
-      statusPesan.textContent = "✅ Aspirasi berhasil dikirim!";
-      form.reset();
-    }
-  });
-});
+    const { data, error } = await client
+      .from("aspirasi")
+      .select("*, komentar(*)")
+      .order("created_at", { ascending: false });
+
+    const ul = document.getElementById("daftarAspirasi");
+    ul.innerHTML = "";
+
+    if (error) return console.error("Gagal ambil data:", error);
+
+    data.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${item.nama}</strong>: ${item.isi}
+        <br><small>${new Date(item.created_at).toLocaleString()}</small>
+        <ul>
+          ${(item.komentar || []).map(k => `<li>💬 ${k.isi}</li>`).join("")}
+        </ul>
+        <button onclick="hapusAspirasi('${item.id}')">🗑 Hapus</button>
+        <hr>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  async function hapusAspirasi(id) {
+    const konfirmasi = confirm("Yakin ingin menghapus aspirasi ini?");
+    if (!konfirmasi) return;
+
+    // Hapus komentar dulu (foreign key)
+    await client.from("komentar").delete().eq("aspirasi_id", id);
+    await client.from("aspirasi").delete().eq("id", id);
+    alert("Aspirasi terhapus");
+    login(); // refresh
+  }
+
+  function logout() {
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("adminBox").style.display = "none";
+    document.getElementById("password").value = "";
+    document.getElementById("daftarAspirasi").innerHTML = "";
+    document.getElementById("salah").textContent = "";
+  }
+</script>
