@@ -1,74 +1,98 @@
+/* Warna dasar dan layout */
 body {
+  background: #e6f0fa;
   font-family: Arial, sans-serif;
-  background-color: #e6f0fb;
-  margin: 0;
-  padding: 0;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.container {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 20px;
-}
-
-.kotak.putih {
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-h1 {
-  text-align: center;
-  color: #1a3d7c;
-}
-
-h2 {
-  color: #1a3d7c;
-}
-
-input, textarea {
+.page-wrapper {
   width: 100%;
+  max-width: 700px;
+}
+
+/* Dua kotak putih */
+.form-box,
+.list-box {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Heading */
+h1, h2 {
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"],
+textarea {
   padding: 12px;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
 button {
   background-color: #2563eb;
   color: white;
   padding: 12px;
-  width: 100%;
-  font-weight: bold;
-  font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-size: 1rem;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #1e40af;
+  background-color: #1d4ed8;
 }
 
+/* Pesan status */
+#statusPesan {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Kotak tiap aspirasi */
 .aspirasi-box {
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   padding: 15px;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
+  margin-top: 20px;
+  background-color: #f9fafb;
 }
 
+/* Komentar */
 .komentar-container {
   margin-top: 10px;
-  padding-left: 10px;
-  border-left: 3px solid #ccc;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
 }
 
-#error {
-  color: red;
-  font-weight: bold;
+.komentar-container p {
+  margin: 5px 0;
+}
+
+/* Form komentar */
+.form-komentar {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
