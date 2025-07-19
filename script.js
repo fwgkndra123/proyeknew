@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // isi lengkapmu
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // Ganti dengan KEY lengkap Anda
+
+  // ✅ GANTI nama variabel agar tidak bentrok!
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const form = document.getElementById("aspirasiForm");
   const namaInput = document.getElementById("nama");
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
 
-    const { error } = await client.from("aspirasi").insert([{ nama, isi }]);
+    const { error } = await supabaseClient.from("aspirasi").insert([{ nama, isi }]);
 
     if (error) {
       statusPesan.textContent = "❌ Gagal mengirim aspirasi.";
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   async function tampilkanAspirasi() {
     daftar.innerHTML = "";
 
-    const { data: aspirasiData, error } = await client
+    const { data: aspirasiData, error } = await supabaseClient
       .from("aspirasi")
       .select("*")
       .order("created_at", { ascending: false });
@@ -65,7 +67,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       await tampilkanKomentar(asp.id);
     }
 
-    // Tambah event listener komentar
     document.querySelectorAll(".form-komentar").forEach((formK) => {
       formK.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (!nama || !isi) return;
 
-        await client.from("komentar").insert([{ aspirasi_id, nama, isi }]);
+        await supabaseClient.from("komentar").insert([{ aspirasi_id, nama, isi }]);
         formK.reset();
         await tampilkanKomentar(aspirasi_id);
       });
@@ -83,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   async function tampilkanKomentar(aspirasi_id) {
-    const { data: komentarData } = await client
+    const { data: komentarData } = await supabaseClient
       .from("komentar")
       .select("*")
       .eq("aspirasi_id", aspirasi_id)
