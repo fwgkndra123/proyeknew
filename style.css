@@ -5,6 +5,7 @@ body {
   color: #333;
   line-height: 1.6;
 }
+
 .container {
   max-width: 500px;
   margin: 40px auto;
@@ -13,10 +14,12 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
 h1 {
   color: #1e3a8a;
   text-align: center;
 }
+
 input, textarea, button {
   width: 100%;
   margin-bottom: 15px;
@@ -25,6 +28,7 @@ input, textarea, button {
   border-radius: 8px;
   font-size: 1rem;
 }
+
 button {
   background: #2563eb;
   color: white;
@@ -32,12 +36,65 @@ button {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 button:hover {
   background: #1e40af;
 }
+
 ::placeholder {
   color: #888;
 }
+
 @media (max-width: 600px) {
-  .container { margin: 20px; }
+  .container {
+    margin: 20px;
+  }
+}
+
+/* === ✨ TAMBAHAN untuk daftar aspirasi === */
+
+#listAspirasi {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.aspirasi-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #2563eb;
+}
+
+.aspirasi-card h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.aspirasi-card p {
+  margin: 6px 0;
+}
+
+.aspirasi-card .tanggal {
+  font-size: 0.8em;
+  color: gray;
+  margin-top: 6px;
+}
+
+.aspirasi-card .komentar-placeholder {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aspirasi-card .komentar-placeholder::before {
+  content: "💬";
+  font-size: 1em;
 }
