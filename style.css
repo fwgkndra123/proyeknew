@@ -1,222 +1,147 @@
-document.addEventListener("DOMContentLoaded", async function () {
-  const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
+/* Warna dasar dan layout */
+body {
+  background: #e6f0fa;
+  font-family: Arial, sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
 
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+.page-wrapper {
+  width: 100%;
+  max-width: 700px;
+}
 
-  const halamanAdmin = document.getElementById("adminBox");
-  const daftarAdmin = document.getElementById("adminDaftarAspirasi");
-  const loginBox = document.getElementById("loginBox");
-  const loginError = document.getElementById("loginError");
+/* Dua kotak putih */
+.form-box,
+.list-box {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
 
-  const form = document.getElementById("aspirasiForm");
-  const namaInput = document.getElementById("nama");
-  const isiInput = document.getElementById("isi");
-  const statusPesan = document.getElementById("statusPesan");
-  const daftar = document.getElementById("daftarAspirasi");
+/* Heading */
+h1, h2 {
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
 
-  if (form) {
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const nama = namaInput.value.trim();
-      const isi = isiInput.value.trim();
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-      if (!nama || !isi) {
-        statusPesan.textContent = "Nama dan aspirasi wajib diisi.";
-        return;
-      }
+input[type="text"],
+input[type="password"],
+textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
 
-      const { error } = await supabaseClient.from("aspirasi").insert([{ nama, isi }]);
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
-      if (error) {
-        statusPesan.textContent = "❌ Gagal mengirim aspirasi.";
-        console.error(error);
-      } else {
-        statusPesan.textContent = "✅ Aspirasi berhasil dikirim!";
-        form.reset();
-        tampilkanAspirasi();
-      }
-    });
+button {
+  background-color: #2563eb;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-    async function tampilkanAspirasi() {
-      daftar.innerHTML = "";
+button:hover {
+  background-color: #1d4ed8;
+}
 
-      const { data: aspirasiData, error } = await supabaseClient
-        .from("aspirasi")
-        .select("*")
-        .order("created_at", { ascending: false });
+/* Tombol khusus hapus */
+button.hapus-btn {
+  background-color: #ef4444 !important;
+  color: white;
+  margin-top: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  width: fit-content;
+}
 
-      if (error) {
-        daftar.innerHTML = "<p>❌ Gagal memuat aspirasi.</p>";
-        console.error(error);
-        return;
-      }
+button.hapus-btn:hover {
+  background-color: #dc2626 !important;
+}
 
-      for (const asp of aspirasiData) {
-        const kotak = document.createElement("div");
-        kotak.className = "aspirasi-box";
+/* Pesan status */
+#statusPesan {
+  margin-top: 10px;
+  font-weight: bold;
+}
 
-        const waktu = new Date(asp.created_at).toLocaleString();
+/* Kotak tiap aspirasi */
+.aspirasi-box {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #f9fafb;
+}
 
-        kotak.innerHTML = `
-          <strong>${asp.nama}</strong> <span style="color:gray; font-size:0.9em;">${waktu}</span>
-          <p>${asp.isi}</p>
-          <div id="komentar-${asp.id}" class="komentar-container"></div>
-          <form data-id="${asp.id}" class="form-komentar">
-            <input type="text" name="nama" placeholder="Nama Anda" required />
-            <input type="text" name="isi" placeholder="Tulis komentar..." required />
-            <button type="submit">Komentar</button>
-          </form>
-        `;
+/* Komentar umum */
+.komentar-container {
+  margin-top: 20px;
+  padding: 12px;
+  border-top: 1px solid #ccc;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
 
-        daftar.appendChild(kotak);
-        await tampilkanKomentar(asp.id);
-      }
+.komentar-container p {
+  margin: 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
 
-      document.querySelectorAll(".form-komentar").forEach((formK) => {
-        formK.addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const aspirasi_id = formK.getAttribute("data-id");
-          const nama = formK.nama.value.trim();
-          const isi = formK.isi.value.trim();
+/* Nama pemberi komentar */
+.komentar-container p strong {
+  color: #1e3a8a;
+}
 
-          if (!nama || !isi) return;
+/* Form komentar */
+.form-komentar,
+.admin-komentar-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-          await supabaseClient.from("komentar").insert([{ aspirasi_id, nama, isi }]);
-          formK.reset();
-          await tampilkanKomentar(aspirasi_id);
-        });
-      });
-    }
+/* Area khusus admin */
+#adminBox .aspirasi-box {
+  background-color: #f3f4f6;
+  padding: 18px;
+}
 
-    async function tampilkanKomentar(aspirasi_id) {
-      const { data: komentarData } = await supabaseClient
-        .from("komentar")
-        .select("*")
-        .eq("aspirasi_id", aspirasi_id)
-        .order("created_at", { ascending: true });
+#adminBox .komentar-container {
+  background-color: #ffffff;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+}
 
-      const divKomentar = document.getElementById(`komentar-${aspirasi_id}`);
-      divKomentar.innerHTML = "<strong>Komentar:</strong>";
+#adminBox form.admin-komentar-form {
+  margin-top: 12px;
+}
 
-      if (!komentarData || komentarData.length === 0) {
-        divKomentar.innerHTML += "<p style='color:gray;'>Belum ada komentar.</p>";
-        return;
-      }
-
-      komentarData.forEach((kom) => {
-        const waktu = new Date(kom.created_at).toLocaleString();
-        const p = document.createElement("p");
-        p.innerHTML = `<strong>${kom.nama}</strong> <span style='color:gray; font-size:0.8em;'>${waktu}</span><br>${kom.isi}`;
-        divKomentar.appendChild(p);
-      });
-    }
-
-    tampilkanAspirasi();
-  }
-
-  if (loginBox && halamanAdmin) {
-    window.loginAdmin = async function () {
-      const pass = document.getElementById("adminPassword").value;
-      if (pass !== "admin123") {
-        loginError.textContent = "Password salah!";
-        return;
-      }
-      loginBox.style.display = "none";
-      halamanAdmin.style.display = "block";
-      tampilkanAspirasiAdmin();
-    };
-
-    window.logoutAdmin = function () {
-      loginBox.style.display = "block";
-      halamanAdmin.style.display = "none";
-    };
-
-    async function tampilkanAspirasiAdmin() {
-      daftarAdmin.innerHTML = "";
-      const { data: aspirasiData, error } = await supabaseClient
-        .from("aspirasi")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        daftarAdmin.innerHTML = "<p>❌ Gagal memuat aspirasi.</p>";
-        console.error(error);
-        return;
-      }
-
-      for (const asp of aspirasiData) {
-        const box = document.createElement("div");
-        box.className = "aspirasi-box";
-        const waktu = new Date(asp.created_at).toLocaleString();
-
-        box.innerHTML = `
-          <strong>${asp.nama}</strong> <span style='color:gray;'>${waktu}</span>
-          <p>${asp.isi}</p>
-          <button onclick="hapusAspirasi('${asp.id}')">Hapus Aspirasi</button>
-          <div id="admin-komentar-${asp.id}" class="komentar-container"></div>
-          <form data-id="${asp.id}" class="admin-komentar-form">
-            <input type="text" name="isi" placeholder="Komentar sebagai Admin" required />
-            <button type="submit">Kirim Komentar</button>
-          </form>
-        `;
-
-        daftarAdmin.appendChild(box);
-        await tampilkanKomentarAdmin(asp.id);
-      }
-
-      document.querySelectorAll(".admin-komentar-form").forEach((formK) => {
-        formK.addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const aspirasi_id = formK.getAttribute("data-id");
-          const isi = formK.isi.value.trim();
-
-          if (!isi) return;
-
-          await supabaseClient.from("komentar").insert([{ aspirasi_id, nama: "Admin", isi }]);
-          formK.reset();
-          await tampilkanKomentarAdmin(aspirasi_id);
-        });
-      });
-    }
-
-    async function tampilkanKomentarAdmin(aspirasi_id) {
-      const { data: komentarData } = await supabaseClient
-        .from("komentar")
-        .select("*")
-        .eq("aspirasi_id", aspirasi_id)
-        .order("created_at", { ascending: true });
-
-      const target = document.getElementById(`admin-komentar-${aspirasi_id}`);
-      target.innerHTML = "<strong>Komentar:</strong>";
-
-      if (!komentarData || komentarData.length === 0) {
-        target.innerHTML += "<p style='color:gray;'>Belum ada komentar.</p>";
-        return;
-      }
-
-      komentarData.forEach((kom) => {
-        const waktu = new Date(kom.created_at).toLocaleString();
-        const p = document.createElement("p");
-        p.innerHTML = `<strong>${kom.nama}</strong> <span style='color:gray; font-size:0.8em;'>${waktu}</span><br>${kom.isi}`;
-
-        const btn = document.createElement("button");
-        btn.textContent = "Hapus";
-        btn.onclick = async () => {
-          await supabaseClient.from("komentar").delete().eq("id", kom.id);
-          await tampilkanKomentarAdmin(aspirasi_id);
-        };
-
-        p.appendChild(document.createElement("br"));
-        p.appendChild(btn);
-        target.appendChild(p);
-      });
-    }
-
-    window.hapusAspirasi = async function (id) {
-      await supabaseClient.from("komentar").delete().eq("aspirasi_id", id);
-      await supabaseClient.from("aspirasi").delete().eq("id", id);
-      tampilkanAspirasiAdmin();
-    };
-  }
-});
+#adminBox button {
+  margin-top: 8px;
+}
