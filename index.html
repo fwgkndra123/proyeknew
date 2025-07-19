@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kotak Aspirasi Siswa</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:," />
+  <link rel="icon" href="data:,"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="page-wrapper">
-    <div class="form-box">
-      <h1>Kotak Aspirasi Siswa</h1>
+  <div class="container">
+    <h1>Kotak Aspirasi Siswa</h1>
+    <div class="form-wrapper">
       <form id="aspirasiForm">
         <input type="text" id="nama" placeholder="Nama Anda" required />
         <textarea id="isi" placeholder="Tulis aspirasi Anda..." required></textarea>
@@ -21,9 +21,9 @@
       <p id="statusPesan"></p>
     </div>
 
-    <div class="list-box">
+    <div class="aspirasi-wrapper">
       <h2>Aspirasi Terkirim</h2>
-      <div id="daftarAspirasi" class="aspirasi-container"></div>
+      <div class="aspirasi-container" id="daftarAspirasi"></div>
     </div>
   </div>
 </body>
