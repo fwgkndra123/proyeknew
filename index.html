@@ -10,11 +10,9 @@
   <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Kotak Aspirasi Siswa</h1>
-
-    <!-- Formulir Pengiriman -->
-    <div class="form-container">
+  <div class="page-wrapper">
+    <div class="form-box">
+      <h1>Kotak Aspirasi Siswa</h1>
       <form id="aspirasiForm">
         <input type="text" id="nama" placeholder="Nama Anda" required />
         <textarea id="isi" placeholder="Tulis aspirasi Anda..." required></textarea>
@@ -23,10 +21,9 @@
       <p id="statusPesan"></p>
     </div>
 
-    <!-- Daftar Aspirasi -->
-    <div class="list-container">
+    <div class="list-box">
       <h2>Aspirasi Terkirim</h2>
-      <div class="aspirasi-container" id="daftarAspirasi"></div>
+      <div id="daftarAspirasi" class="aspirasi-container"></div>
     </div>
   </div>
 </body>
