@@ -2,72 +2,24 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Aspirasi</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Admin - Kotak Aspirasi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="admin.js" defer></script>
 </head>
 <body>
-<div class="container" id="loginBox">
-  <h1>Login Admin</h1>
-  <input type="password" id="password" placeholder="Password admin">
-  <button onclick="login()">Masuk</button>
-  <p id="salah" style="color:red;"></p>
-</div>
+  <div class="container" id="loginBox">
+    <h1>Login Admin</h1>
+    <input type="password" id="password" placeholder="Masukkan password admin">
+    <button onclick="login()">Masuk</button>
+    <p id="errorText" style="color: red;"></p>
+  </div>
 
-<div class="container" id="adminBox" style="display:none;">
-  <h1>Daftar Aspirasi</h1>
-  <ul id="daftarAspirasi"></ul>
-  <button onclick="logout()">Keluar</button>
-</div>
-
-<script>
-  const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
-
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  async function login() {
-    const pass = document.getElementById("password").value;
-    if (pass === "admin123") {
-      document.getElementById("loginBox").style.display = "none";
-      document.getElementById("adminBox").style.display = "block";
-
-      const { data, error } = await client
-        .from("aspirasi")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      const ul = document.getElementById("daftarAspirasi");
-      ul.innerHTML = "";
-
-      if (error) {
-        console.error("Gagal mengambil data:", error);
-        ul.innerHTML = "<li>❌ Gagal memuat data.</li>";
-        return;
-      }
-
-      if (data.length === 0) {
-        ul.innerHTML = "<li>Belum ada aspirasi.</li>";
-      }
-
-      data.forEach(a => {
-        const li = document.createElement("li");
-        li.textContent = `${new Date(a.created_at).toLocaleString()} - ${a.nama}: ${a.isi}`;
-        ul.appendChild(li);
-      });
-    } else {
-      document.getElementById("salah").textContent = "Password salah!";
-    }
-  }
-
-  function logout() {
-    document.getElementById("loginBox").style.display = "block";
-    document.getElementById("adminBox").style.display = "none";
-    document.getElementById("password").value = "";
-    document.getElementById("daftarAspirasi").innerHTML = "";
-    document.getElementById("salah").textContent = "";
-  }
-</script>
+  <div class="container" id="adminPanel" style="display: none;">
+    <h1>Dashboard Admin</h1>
+    <div id="daftarAspirasi"></div>
+    <button onclick="logout()">Keluar</button>
+  </div>
 </body>
 </html>
