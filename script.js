@@ -1,8 +1,11 @@
+// script.js
+
 document.addEventListener("DOMContentLoaded", function () {
   const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
-  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // samakan dengan milikmu
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
 
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // GANTI NAMA VARIABEL DARI `supabase` -> `client`
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const form = document.getElementById("aspirasiForm");
   const namaInput = document.getElementById("nama");
@@ -20,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    const { error } = await supabase.from("aspirasi").insert([{ nama, isi }]);
+    const { error } = await client.from("aspirasi").insert([{ nama, isi }]);
 
     if (error) {
       statusPesan.textContent = "Gagal mengirim aspirasi.";
