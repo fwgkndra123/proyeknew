@@ -1,26 +1,33 @@
-const supabase = window.supabaseClient;
+document.addEventListener("DOMContentLoaded", function () {
+  const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."; // samakan dengan milikmu
 
-document.getElementById("aspirasiForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  const nama = document.getElementById("nama").value.trim();
-  const isi = document.getElementById("isi").value.trim();
+  const form = document.getElementById("aspirasiForm");
+  const namaInput = document.getElementById("nama");
+  const isiInput = document.getElementById("isi");
+  const statusPesan = document.getElementById("statusPesan");
 
-  if (!nama || !isi) {
-    alert("Nama dan isi aspirasi harus diisi!");
-    return;
-  }
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const { data, error } = await supabase.from("aspirasi").insert([{ nama, isi }]);
+    const nama = namaInput.value.trim();
+    const isi = isiInput.value.trim();
 
-  const status = document.getElementById("statusPesan");
-  if (error) {
-    console.error("Gagal mengirim:", error);
-    status.textContent = "Gagal mengirim aspirasi.";
-    status.style.color = "red";
-  } else {
-    status.textContent = "Aspirasi berhasil dikirim!";
-    status.style.color = "green";
-    document.getElementById("aspirasiForm").reset();
-  }
+    if (!nama || !isi) {
+      statusPesan.textContent = "Nama dan aspirasi wajib diisi.";
+      return;
+    }
+
+    const { error } = await supabase.from("aspirasi").insert([{ nama, isi }]);
+
+    if (error) {
+      statusPesan.textContent = "Gagal mengirim aspirasi.";
+      console.error(error);
+    } else {
+      statusPesan.textContent = "Aspirasi berhasil dikirim!";
+      form.reset();
+    }
+  });
 });
