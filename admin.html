@@ -22,11 +22,10 @@
 </div>
 
 <script>
-  // Ganti dengan URL dan anon key milikmu
   const SUPABASE_URL = "https://zuathwjzldickgvigffd.supabase.co";
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1YXRod2p6bGRpY2tndmlnZmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI4ODkwNjksImV4cCI6MjA2ODQ2NTA2OX0.OjWkn6GIed1feHeoNmXZCKwD3bvOoQT7aYKQCzKJt8w";
 
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function login() {
     const pass = document.getElementById("password").value;
@@ -34,19 +33,19 @@
       document.getElementById("loginBox").style.display = "none";
       document.getElementById("adminBox").style.display = "block";
 
-      const { data, error } = await supabase
+      const { data, error } = await client
         .from("aspirasi")
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error("Gagal mengambil data:", error);
-        document.getElementById("daftarAspirasi").innerHTML = "<li>❌ Gagal memuat data.</li>";
-        return;
-      }
-
       const ul = document.getElementById("daftarAspirasi");
       ul.innerHTML = "";
+
+      if (error) {
+        console.error("Gagal mengambil data:", error);
+        ul.innerHTML = "<li>❌ Gagal memuat data.</li>";
+        return;
+      }
 
       if (data.length === 0) {
         ul.innerHTML = "<li>Belum ada aspirasi.</li>";
