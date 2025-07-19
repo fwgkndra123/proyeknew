@@ -1,0 +1,147 @@
+/* Warna dasar dan layout */
+body {
+  background: #e6f0fa;
+  font-family: Arial, sans-serif;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.page-wrapper {
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Dua kotak putih */
+.form-box,
+.list-box {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Heading */
+h1, h2 {
+  color: #1e3a8a;
+  margin-bottom: 20px;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  background-color: #2563eb;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Tombol khusus hapus */
+button.hapus-btn {
+  background-color: #ef4444 !important;
+  color: white;
+  margin-top: 6px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+button.hapus-btn:hover {
+  background-color: #dc2626 !important;
+}
+
+/* Pesan status */
+#statusPesan {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Kotak tiap aspirasi */
+.aspirasi-box {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #f9fafb;
+}
+
+/* Komentar umum */
+.komentar-container {
+  margin-top: 20px;
+  padding: 12px;
+  border-top: 1px solid #ccc;
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.komentar-container p {
+  margin: 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Nama pemberi komentar */
+.komentar-container p strong {
+  color: #1e3a8a;
+}
+
+/* Form komentar */
+.form-komentar,
+.admin-komentar-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Area khusus admin */
+#adminBox .aspirasi-box {
+  background-color: #f3f4f6;
+  padding: 18px;
+}
+
+#adminBox .komentar-container {
+  background-color: #ffffff;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#adminBox form.admin-komentar-form {
+  margin-top: 12px;
+}
+
+#adminBox button {
+  margin-top: 8px;
+}
