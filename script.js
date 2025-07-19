@@ -5,20 +5,17 @@ document.getElementById("aspirasiForm").addEventListener("submit", async functio
 
   const nama = document.getElementById("nama").value.trim();
   const isi = document.getElementById("isi").value.trim();
-  const status = document.getElementById("pesanSukses");
 
   if (!nama || !isi) {
-    status.textContent = "Nama dan isi aspirasi wajib diisi.";
-    status.style.color = "red";
+    alert("Nama dan isi aspirasi harus diisi!");
     return;
   }
 
-  const { data, error } = await supabase
-    .from("aspirasi")
-    .insert([{ nama, isi }]);
+  const { data, error } = await supabase.from("aspirasi").insert([{ nama, isi }]);
 
+  const status = document.getElementById("statusPesan");
   if (error) {
-    console.error("Supabase error:", error);
+    console.error("Gagal mengirim:", error);
     status.textContent = "Gagal mengirim aspirasi.";
     status.style.color = "red";
   } else {
