@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Aspirasi</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="supabaseClient.js"></script>
+</head>
+<body>
+<div class="container" id="loginBox">
+  <h1>Login Admin</h1>
+  <input type="password" id="password" placeholder="Password admin">
+  <button onclick="login()">Masuk</button>
+  <p id="salah" style="color:red;"></p>
+</div>
+
+<div class="container" id="adminBox" style="display:none;">
+  <h1>Daftar Aspirasi</h1>
+  <ul id="daftarAspirasi"></ul>
+  <button onclick="logout()">Keluar</button>
+</div>
+
+<script>
+  const supabase = window.supabaseClient;
+
+  async function login() {
+    const pass = document.getElementById("password").value;
+    if (pass === "admin123") {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("adminBox").style.display = "block";
+
+      const { data, error } = await supabase
+        .from("aspirasi")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Gagal mengambil data:", error);
+        return;
+      }
+
+      const ul = document.getElementById("daftarAspirasi");
+      ul.innerHTML = "";
+      data.forEach(a => {
+        const li = document.createElement("li");
+        li.textContent = `${a.created_at} - ${a.nama}: ${a.isi}`;
+        ul.appendChild(li);
+      });
+    } else {
+      document.getElementById("salah").textContent = "Password salah!";
+    }
+  }
+
+  function logout() {
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("adminBox").style.display = "none";
+    document.getElementById("password").value = "";
+    document.getElementById("daftarAspirasi").innerHTML = "";
+    document.getElementById("salah").textContent = "";
+  }
+</script>
+</body>
+</html>
